@@ -3,362 +3,438 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyBizTools.my | Malaysian Business & Document Utility Suite</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .ad-slot {
-      background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 10px, #f1f5f9 10px, #f1f5f9 20px);
-    }
-  </style>
+  <title>MyBizTools.my | Free Malaysian Business Tools</title>
+  <meta name="description" content="Free Malaysia-focused business tools: SST and profit margin calculator with 5-sen cash rounding. More SME and PDF tools in development. Everything runs in your browser." />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="canonical" href="https://mybiztools.chrisquek.my/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mybiztools.chrisquek.my/" />
+  <meta property="og:title" content="MyBizTools.my | Free Malaysian Business Tools" />
+  <meta property="og:description" content="Free SST and profit margin calculator with 5-sen cash rounding. Runs in your browser." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='800' fill='white' text-anchor='middle'%3EMB%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <noscript><style>.js-only{display:none}</style></noscript>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-[#f1f5f9] text-slate-800 min-h-screen flex flex-col">
 
-  <!-- TOP NAVIGATION BAR -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:text-slate-900 focus:px-3 focus:py-2 focus:rounded">Skip to main content</a>
+
+  <!-- TOP COMMAND BAR -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="showDashboard()">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-sm">M</div>
+      <a href="./" data-action="go-home" class="flex items-center space-x-3" aria-label="MyBizTools.my home">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-inner border border-blue-400/30" aria-hidden="true">MB</div>
         <div>
           <div class="flex items-center space-x-2">
-            <span class="font-bold text-lg tracking-tight text-slate-900">MyBizTools<span class="text-blue-600">.my</span></span>
-            <span class="text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200" id="planBadge">Free Tier</span>
+            <span class="font-bold text-lg tracking-tight text-white">MyBizTools<span class="text-blue-400">.my</span></span>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">MY SME EDITION</span>
           </div>
-          <p class="text-xs text-slate-500 hidden sm:block">Fast, Browser-Based Business & Document Utilities</p>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Business tools for Malaysian SMEs and freelancers</p>
         </div>
-      </div>
+      </a>
 
       <div class="flex items-center space-x-2 sm:space-x-3">
-        <button onclick="toggleAdFreeSimulation()" id="simToggleBtn"
-          class="text-xs px-3 py-1.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 font-medium transition">
-          🛠️ Dev: Ads ON
+        <div class="hidden lg:flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-800/90 border border-slate-700 text-xs text-slate-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
+          <span>Runs in your browser</span>
+        </div>
+
+        <button type="button" data-action="open-modal" data-modal="securityModal"
+          class="text-xs sm:text-sm text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-slate-800 transition flex items-center space-x-1.5" aria-label="Data privacy and FAQ">
+          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
+          <span class="hidden md:inline">Data Privacy &amp; FAQ</span>
         </button>
 
-        <button onclick="openModal('securityModal')" class="text-sm text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg hover:bg-slate-100 transition flex items-center space-x-1">
-          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
-          <span class="hidden md:inline">FAQ & Privacy</span>
-        </button>
-
-        <button id="removeAdsBtn" onclick="openModal('stripeModal')"
-          class="bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-medium px-3.5 py-2 rounded-lg shadow-sm transition flex items-center space-x-1.5">
-          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
-          <span>Remove Ads (RM 25)</span>
+        <button type="button" data-action="open-modal" data-modal="kopiModal"
+          class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 text-xs sm:text-sm font-bold px-3.5 py-2 rounded-lg shadow-sm transition flex items-center space-x-1.5">
+          <i data-lucide="coffee" class="w-4 h-4" aria-hidden="true"></i>
+          <span>Buy Me a Kopi</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- TOP BANNER AD SLOT -->
-  <div class="ad-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
-    <div class="ad-slot border border-dashed border-slate-300 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-500">
-      <div class="flex items-center space-x-2">
-        <span class="px-1.5 py-0.5 bg-slate-200 text-slate-600 rounded font-semibold uppercase text-[10px]">Ad</span>
-        <span>Sponsor Banner Slot (728x90) — Keeps MyBizTools.my free to use.</span>
+  <!-- HERO & SEARCH -->
+  <section class="hero-gradient text-white border-b border-slate-800" aria-label="Search tools">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-400/20 text-blue-300 text-xs font-medium mb-2">
+            <i data-lucide="zap" class="w-3.5 h-3.5" aria-hidden="true"></i>
+            <span>Free to use • No sign-up • Built for Malaysian businesses</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Executive Utility Workspace</h1>
+          <p class="text-xs sm:text-sm text-slate-300 mt-1 flex items-center gap-1.5 flex-wrap">
+            <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true"></i>
+            <span>Your figures and files are processed in your browser. Our tools do not upload them.</span>
+            <button type="button" data-action="open-modal" data-modal="securityModal" class="text-blue-400 hover:text-blue-300 underline">How this works</button>
+          </p>
+        </div>
+
+        <div class="w-full lg:w-96">
+          <div class="relative">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true"></i>
+            <input type="search" id="toolSearch" autocomplete="off" aria-label="Search tools"
+              placeholder="Search tools (e.g. SST, margin, Merge PDF)..."
+              class="w-full pl-10 pr-4 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-inner" />
+          </div>
+          <div class="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-1" role="group" aria-label="Filter by category">
+            <button type="button" data-action="set-category" data-cat="all" class="cat-pill px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white transition" aria-pressed="true">All tools</button>
+            <button type="button" data-action="set-category" data-cat="finance" class="cat-pill px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" aria-pressed="false">MY Finance &amp; SST</button>
+            <button type="button" data-action="set-category" data-cat="pdf" class="cat-pill px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" aria-pressed="false">Document &amp; PDF</button>
+          </div>
+        </div>
       </div>
-      <button onclick="openModal('stripeModal')" class="text-blue-600 hover:underline font-medium text-left sm:text-right">Hide all ads forever (RM 25 one-time)</button>
     </div>
-  </div>
+  </section>
 
-  <!-- MAIN CONTENT AREA -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-    <div class="flex flex-col lg:flex-row gap-8">
+  <!-- AD SLOT (leaderboard): add the AdSense snippet here only AFTER approval.
+       Reserve a fixed height (e.g. min-h-[90px]) to avoid layout shift. -->
 
-      <!-- WORKSPACE COLUMN -->
-      <div class="flex-1">
+  <main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex-1 w-full">
+    <noscript>
+      <div class="mb-5 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">These tools need JavaScript to run in your browser. Please enable JavaScript and reload.</div>
+    </noscript>
 
-        <!-- VIEW 1: ICON DASHBOARD -->
+    <div class="flex flex-col lg:flex-row gap-7">
+
+      <div class="flex-1 min-w-0">
+
+        <!-- VIEW 1: DASHBOARD -->
         <div id="dashboardView">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <div>
-              <h1 class="text-2xl font-bold text-slate-900">Business Utility Workspace</h1>
-              <p class="text-sm text-slate-600 flex items-center gap-1.5 mt-0.5">
-                <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600"></i>
-                <span>Processed locally in your browser. Zero external server storage.</span>
-                <button onclick="openModal('securityModal')" class="text-slate-400 hover:text-blue-600 inline-flex items-center" title="Learn how local browser memory works">
-                  <i data-lucide="info" class="w-4 h-4"></i>
-                </button>
-              </p>
-            </div>
 
-            <div class="relative w-full sm:w-64">
-              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
-              <input type="text" id="toolSearch" oninput="filterTools()" placeholder="Search tools (e.g. SST, PDF)..."
-                class="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-          </div>
+          <p id="noResults" class="hidden mb-6 rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">No tools match your search. Try a different word, or switch the category to "All tools".</p>
 
-          <!-- CATEGORY A: MALAYSIAN BUSINESS & SALES TOOLS -->
-          <div class="mb-8">
-            <div class="flex items-center space-x-2 mb-3">
-              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-              <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Malaysian Business & Sales Tools</h2>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              <div onclick="openToolWorkspace('sales-report')"
-                class="tool-card group bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer flex items-start space-x-4"
-                data-name="sales report generator excel csv sst myr chart">
-                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">
-                  <i data-lucide="bar-chart-3" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <div class="flex items-center gap-2">
-                    <h3 class="font-semibold text-slate-900 group-hover:text-blue-600 transition">Create Sales Report</h3>
-                    <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">MYR / SST</span>
-                  </div>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Manual input or CSV/Excel upload to clean PDF summary & charts.</p>
-                </div>
-              </div>
-
-              <div onclick="openToolWorkspace('sst-calculator')"
-                class="tool-card group bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer flex items-start space-x-4"
-                data-name="sst tax profit margin calculator malaysia 6% 8%">
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition">
-                  <i data-lucide="calculator" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-slate-900 group-hover:text-emerald-600 transition">SST & Margin Calculator</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Instant 6% / 8% SST inclusive & exclusive pricing + gross margin.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CATEGORY B: DOCUMENT & PDF UTILITIES -->
-          <div class="mb-8">
-            <div class="flex items-center space-x-2 mb-3">
-              <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-              <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Core Document & PDF Utilities</h2>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              <div onclick="openToolWorkspace('merge-pdf')"
-                class="tool-card group bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer flex items-start space-x-4"
-                data-name="merge pdf combine join">
-                <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition">
-                  <i data-lucide="files" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-slate-900 group-hover:text-indigo-600 transition">Merge PDF</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Combine multiple PDFs into one organized document in seconds.</p>
-                </div>
-              </div>
-
-              <div onclick="openToolWorkspace('split-pdf')"
-                class="tool-card group bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer flex items-start space-x-4"
-                data-name="split extract pdf pages">
-                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition">
-                  <i data-lucide="scissors" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-slate-900 group-hover:text-purple-600 transition">Split / Extract PDF</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Pull specific pages out of a PDF report or split into separate files.</p>
-                </div>
-              </div>
-
-              <div onclick="openToolWorkspace('word-to-pdf')"
-                class="tool-card group bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer flex items-start space-x-4"
-                data-name="convert word to pdf docx">
-                <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 group-hover:bg-sky-600 group-hover:text-white transition">
-                  <i data-lucide="file-text" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-slate-900 group-hover:text-sky-600 transition">Word to PDF</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Convert .docx documents into standard PDF format effortlessly.</p>
-                </div>
-              </div>
-
-              <div onclick="openToolWorkspace('pdf-to-word')"
-                class="tool-card group bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer flex items-start space-x-4"
-                data-name="convert pdf to word editable docx">
-                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-white transition">
-                  <i data-lucide="file-edit" class="w-6 h-6"></i>
-                </div>
-                <div>
-                  <h3 class="font-semibold text-slate-900 group-hover:text-amber-600 transition">PDF to Word</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Turn PDF files back into editable Word (.docx) documents.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CATEGORY C: PHASE 2 VOTE CARDS -->
-          <div>
-            <div class="flex items-center justify-between mb-3">
+          <!-- SUITE A -->
+          <section class="mb-8 suite-section" data-suite="finance" aria-labelledby="suiteA">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2.5 mb-4">
               <div class="flex items-center space-x-2">
-                <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Coming Soon — Tap to Vote Next Tool</h2>
+                <div class="w-2.5 h-2.5 rounded-sm bg-blue-600" aria-hidden="true"></div>
+                <h2 id="suiteA" class="text-xs font-bold uppercase tracking-wider text-slate-700">Malaysian Business &amp; Financial Suite</h2>
               </div>
-              <span class="text-xs text-slate-400" id="voteFeedback">Help us prioritize Phase 2</span>
+              <span class="text-[11px] font-medium text-slate-400">MYR • SST-ready</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- SST calculator (LIVE) -->
+              <div role="button" tabindex="0" data-tool="sst-calculator" data-cat="finance"
+                data-name="sst tax profit margin calculator malaysia service tax sales tax 5 sen rounding"
+                class="tool-card card-hover bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-emerald-600 p-5 cursor-pointer flex flex-col justify-between shadow-sm">
+                <div>
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                      <i data-lucide="calculator" class="w-5 h-5" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">5-Sen Rounding</span>
+                  </div>
+                  <h3 class="font-bold text-base text-slate-900 mt-3.5">SST &amp; Profit Margin Calculator</h3>
+                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Work out service tax (8% or 6%) or sales tax (10% or 5%), tax-inclusive or tax-exclusive prices, profit margin and markup, and Bank Negara 5-sen cash rounding.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5" aria-hidden="true"></i> Instant</span>
+                  <span class="font-semibold text-emerald-600 flex items-center gap-1">Open tool <i data-lucide="arrow-right" class="w-3.5 h-3.5" aria-hidden="true"></i></span>
+                </div>
+              </div>
+
+              <!-- Sales report (COMING SOON) -->
+              <div data-cat="finance" aria-disabled="true"
+                data-name="sales report generator excel csv sst myr chart"
+                class="tool-card is-soon bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-blue-600 p-5 flex flex-col justify-between shadow-sm">
+                <div>
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                      <i data-lucide="bar-chart-3" class="w-5 h-5" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">In development</span>
+                  </div>
+                  <h3 class="font-bold text-base text-slate-900 mt-3.5">Sales Report Generator</h3>
+                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Enter transactions or load an Excel/CSV sheet to get a sales summary with MYR and SST breakdowns.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Coming soon</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SUITE B -->
+          <section class="mb-8 suite-section" data-suite="pdf" aria-labelledby="suiteB">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2.5 mb-4">
+              <div class="flex items-center space-x-2">
+                <div class="w-2.5 h-2.5 rounded-sm bg-indigo-600" aria-hidden="true"></div>
+                <h2 id="suiteB" class="text-xs font-bold uppercase tracking-wider text-slate-700">Document &amp; PDF Workflow Suite</h2>
+              </div>
+              <span class="text-[11px] font-medium text-slate-400">No daily limits • No uploads</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div data-cat="pdf" aria-disabled="true" data-name="merge pdf combine join documents"
+                class="tool-card is-soon bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-indigo-600 p-5 flex flex-col justify-between shadow-sm">
+                <div>
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                      <i data-lucide="files" class="w-5 h-5" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">In development</span>
+                  </div>
+                  <h3 class="font-bold text-base text-slate-900 mt-3.5">Merge PDF Documents</h3>
+                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Combine several PDFs into one file, right in your browser.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Coming soon</div>
+              </div>
+
+              <div data-cat="pdf" aria-disabled="true" data-name="split extract pdf pages separate"
+                class="tool-card is-soon bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-violet-600 p-5 flex flex-col justify-between shadow-sm">
+                <div>
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-violet-50 border border-violet-100 text-violet-600 flex items-center justify-center shrink-0">
+                      <i data-lucide="scissors" class="w-5 h-5" aria-hidden="true"></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">In development</span>
+                  </div>
+                  <h3 class="font-bold text-base text-slate-900 mt-3.5">Split &amp; Extract PDF</h3>
+                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Pull out page ranges or split a PDF into separate files.</p>
+                </div>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Coming soon</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PHASE 2 -->
+          <section class="bg-white rounded-xl border border-slate-200/90 p-5 shadow-sm" aria-labelledby="phase2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <div>
+                <h2 id="phase2" class="text-xs font-bold uppercase tracking-wider text-slate-700">Phase 2 — Tell us what to build next</h2>
+                <p class="text-xs text-slate-500">Pick the tool you would use most.</p>
+              </div>
+              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md" id="voteFeedback" role="status" aria-live="polite">Tap a tool to suggest it</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-              <button onclick="voteTool('Invoice & Quotation Maker')" class="tool-card text-left bg-slate-100/80 hover:bg-white p-4 rounded-xl border border-dashed border-slate-300 transition flex items-center justify-between" data-name="invoice quotation">
-                <div>
-                  <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">Phase 2</span>
-                  <h4 class="font-medium text-sm text-slate-700 mt-1">Invoice & Quotation</h4>
-                </div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400"></i>
+              <button type="button" data-action="vote" data-tool-name="Invoice & Quotation Maker" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
+                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Invoice &amp; Quotation</h3></div>
+                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
               </button>
-
-              <button onclick="voteTool('Payment Voucher Maker')" class="tool-card text-left bg-slate-100/80 hover:bg-white p-4 rounded-xl border border-dashed border-slate-300 transition flex items-center justify-between" data-name="payment voucher receipt">
-                <div>
-                  <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">Phase 2</span>
-                  <h4 class="font-medium text-sm text-slate-700 mt-1">Payment Voucher</h4>
-                </div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400"></i>
+              <button type="button" data-action="vote" data-tool-name="Payment Voucher Maker" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
+                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Payment Voucher</h3></div>
+                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
               </button>
-
-              <button onclick="voteTool('Compress PDF')" class="tool-card text-left bg-slate-100/80 hover:bg-white p-4 rounded-xl border border-dashed border-slate-300 transition flex items-center justify-between" data-name="compress shrink pdf">
-                <div>
-                  <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">Phase 2</span>
-                  <h4 class="font-medium text-sm text-slate-700 mt-1">Compress PDF</h4>
-                </div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400"></i>
+              <button type="button" data-action="vote" data-tool-name="Compress PDF" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
+                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Compress PDF</h3></div>
+                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
               </button>
-
-              <button onclick="voteTool('Sign & Chop PDF')" class="tool-card text-left bg-slate-100/80 hover:bg-white p-4 rounded-xl border border-dashed border-slate-300 transition flex items-center justify-between" data-name="sign watermark stamp pdf">
-                <div>
-                  <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-slate-200 text-slate-600">Phase 2</span>
-                  <h4 class="font-medium text-sm text-slate-700 mt-1">Sign & Chop PDF</h4>
-                </div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400"></i>
+              <button type="button" data-action="vote" data-tool-name="Sign & Company Chop PDF" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
+                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Sign &amp; Company Chop</h3></div>
+                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
               </button>
             </div>
-          </div>
+          </section>
         </div>
 
-        <!-- VIEW 2: DYNAMIC TOOL WORKSPACE CONTAINER -->
+        <!-- VIEW 2: TOOL WORKSPACE -->
         <div id="toolWorkspaceView" class="hidden bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-          <button onclick="showDashboard()" class="text-xs font-medium text-slate-500 hover:text-slate-900 flex items-center space-x-1 mb-4">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            <span>Back to All Tools</span>
-          </button>
-          <h2 id="activeToolTitle" class="text-xl font-bold text-slate-900">Tool Name</h2>
-          <p id="activeToolDesc" class="text-sm text-slate-500 mt-1 mb-6">Tool description.</p>
-
-          <!-- Dynamic Module Slot -->
-          <div id="toolModuleContainer" class="border-2 border-dashed border-slate-300 rounded-xl p-10 text-center bg-slate-50">
-            <i data-lucide="upload-cloud" class="w-10 h-10 text-blue-600 mx-auto mb-3"></i>
-            <p class="font-medium text-slate-700">Modular Tool Container Ready</p>
-            <p class="text-xs text-slate-500 mt-1">Tap below to test local RAM logging and compliance proof generation.</p>
-            <button onclick="simulateFileAction()" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-4 py-2 rounded-lg transition">
-              Simulate Local File Processing
+          <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
+            <button type="button" data-action="go-home" class="text-xs font-semibold text-slate-600 hover:text-blue-600 flex items-center space-x-1.5 bg-slate-100 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition">
+              <i data-lucide="arrow-left" class="w-4 h-4" aria-hidden="true"></i>
+              <span>All tools</span>
             </button>
+            <span class="text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md">Runs in your browser</span>
           </div>
 
-          <div class="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400">
-            <span>🔒 Processed locally in device memory. Never uploaded to any external server.</span>
-            <button onclick="openModal('securityModal')" class="text-slate-500 hover:text-blue-600 underline text-left sm:text-right">View Data Policy / Clear Memory</button>
+          <h2 id="activeToolTitle" class="text-xl font-bold text-slate-900" tabindex="-1">Tool</h2>
+          <p id="activeToolDesc" class="text-xs sm:text-sm text-slate-500 mt-1 mb-6"></p>
+
+          <div id="toolModuleContainer"></div>
+
+          <div class="mt-6 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400">
+            <span>Reference tool only — not tax or accounting advice. Confirm rates with the Royal Malaysian Customs Department (MySST).</span>
+            <button type="button" data-action="open-modal" data-modal="securityModal" class="text-slate-500 hover:text-blue-600 underline font-medium text-left sm:text-right">Data policy / Clear memory</button>
           </div>
         </div>
-
       </div>
 
-      <!-- SIDEBAR AD SLOT -->
-      <aside class="ad-container w-full lg:w-72 shrink-0">
-        <div class="ad-slot border border-dashed border-slate-300 rounded-xl p-5 h-72 flex flex-col items-center justify-center text-center text-xs text-slate-500 sticky top-24">
-          <span class="px-2 py-0.5 bg-slate-200 text-slate-600 rounded font-semibold uppercase text-[10px] mb-2">Sponsored Ad</span>
-          <p class="font-medium text-slate-700 mb-1">Sidebar Ad Unit (300x250)</p>
-          <p class="text-slate-400 mb-4">Google AdSense / Direct SME Sponsor Slot</p>
-          <button onclick="openModal('stripeModal')" class="px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 font-medium shadow-sm">
-            Remove Ads — RM 25 Once
-          </button>
+      <!-- SIDEBAR -->
+      <aside class="w-full lg:w-80 shrink-0 space-y-5" aria-label="Support and information">
+        <!-- AD SLOT (rectangle 300x250): add the AdSense snippet here only AFTER approval. -->
+
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-xl p-5 shadow-md border border-slate-700">
+          <div class="flex items-center space-x-2.5 mb-2">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/30 text-amber-400 flex items-center justify-center">
+              <i data-lucide="coffee" class="w-4 h-4" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h2 class="font-bold text-sm text-white">Saved you time today?</h2>
+              <p class="text-[11px] text-slate-400">Free, independent Malaysian project</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-300 leading-relaxed mt-2 mb-4">MyBizTools.my has no paywalls or daily limits. If a tool helped your work, you can say thanks with an optional tip.</p>
+          <button type="button" data-action="open-modal" data-modal="kopiModal" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg shadow transition">Buy Me a Kopi</button>
+        </div>
+
+        <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-sm">
+          <h2 class="font-bold text-sm text-slate-900 flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600" aria-hidden="true"></i> Your data</h2>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">Working data stays in your browser's memory and clears automatically after 30 minutes of inactivity.</p>
+          <button type="button" data-action="open-modal" data-modal="securityModal" class="mt-3 text-xs font-semibold text-blue-600 hover:text-blue-700 underline">Read the details</button>
         </div>
       </aside>
-
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="bg-white border-t border-slate-200 mt-12 py-5 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© 2026 <strong>MyBizTools.my</strong> — Malaysian Business & Document Utilities.</div>
+      <div>© 2026 <strong>MyBizTools.my</strong> — Independent business &amp; document tools for Malaysia.</div>
       <div class="flex items-center space-x-4">
-        <button onclick="openModal('securityModal')" class="hover:text-slate-900 underline">FAQ & Data Security</button>
-        <span>•</span>
-        <button onclick="openModal('stripeModal')" class="hover:text-slate-900">Restore Pro Pass</button>
+        <button type="button" data-action="open-modal" data-modal="securityModal" class="hover:text-slate-900 underline">Data privacy &amp; FAQ</button>
+        <span aria-hidden="true">•</span>
+        <button type="button" data-action="open-modal" data-modal="kopiModal" class="hover:text-amber-600 font-medium">Buy Me a Kopi</button>
       </div>
     </div>
   </footer>
 
-  <!-- MODAL 1: FAQ & DATA SECURITY -->
-  <div id="securityModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200">
+  <!-- MODAL: PRIVACY & FAQ -->
+  <div id="securityModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="securityTitle" data-modal-root>
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div class="flex items-center space-x-2">
-          <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600"></i>
-          <h3 class="font-bold text-slate-900">FAQ & Local Data Security</h3>
+          <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600" aria-hidden="true"></i>
+          <h2 id="securityTitle" class="font-bold text-slate-900">Data privacy &amp; FAQ</h2>
         </div>
-        <button onclick="closeModal('securityModal')" class="text-slate-400 hover:text-slate-600">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <button type="button" data-action="close-modal" aria-label="Close" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
       </div>
 
       <div class="py-4 space-y-4 text-xs text-slate-600 leading-relaxed">
         <div>
-          <h4 class="font-semibold text-slate-900 text-sm">1. Where do my uploaded files go?</h4>
-          <p class="mt-1">Your files stay inside your device's local browser memory (RAM). Nothing is transmitted to an external cloud server.</p>
+          <h3 class="font-bold text-slate-900 text-sm">Where do my figures and files go?</h3>
+          <p class="mt-1">Our tools process them inside your browser. They are not uploaded to our servers, and we do not keep copies.</p>
         </div>
         <div>
-          <h4 class="font-semibold text-slate-900 text-sm">2. Temporary 30-Minute Session Cache</h4>
-          <p class="mt-1">Parsed sales tables stay in temporary browser session storage for 30 minutes so you can adjust SST or date parameters and regenerate reports without re-selecting your file.</p>
+          <h3 class="font-bold text-slate-900 text-sm">How long is working data kept?</h3>
+          <p class="mt-1">Only in this tab's memory, so you can adjust settings without retyping. It clears when you press <em>Clear memory</em>, after 30 minutes of inactivity, or when you close or leave the tab.</p>
         </div>
+        <div>
+          <h3 class="font-bold text-slate-900 text-sm">Can I check this myself?</h3>
+          <p class="mt-1">Yes. Open your browser's developer tools, go to the Network tab, use a tool, and confirm that no request carries your data. Ads, once enabled, are loaded by Google and are covered by the Privacy Policy.</p>
+        </div>
+
         <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-semibold text-slate-800">Session Compliance Log</span>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <span class="font-bold text-slate-800">Session activity log</span>
             <div class="space-x-2">
-              <button onclick="purgeSessionMemory()" class="text-rose-600 hover:underline font-medium">Clear Memory</button>
-              <span>|</span>
-              <button onclick="downloadPurgeCertificate()" class="text-blue-600 hover:underline font-medium">Download .TXT Proof</button>
+              <button type="button" data-action="purge" class="text-rose-600 hover:underline font-semibold">Clear memory</button>
+              <span aria-hidden="true">|</span>
+              <button type="button" data-action="download-receipt" class="text-blue-600 hover:underline font-semibold">Download session receipt (.txt)</button>
             </div>
           </div>
-          <pre id="sessionAuditLog" class="bg-slate-900 text-emerald-400 p-2.5 rounded-lg text-[11px] font-mono overflow-x-auto max-h-28">[System Ready] Zero files currently held in browser session memory.</pre>
+          <pre id="sessionAuditLog" class="bg-slate-900 text-emerald-400 p-2.5 rounded-lg text-[11px] font-mono overflow-x-auto max-h-28" aria-live="polite"></pre>
+          <p class="mt-2 text-[11px] text-slate-400">The receipt is generated by this page from its own log. It is a convenience record, not an independent audit.</p>
         </div>
       </div>
 
       <div class="pt-2 flex justify-end">
-        <button onclick="closeModal('securityModal')" class="px-4 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg">Close</button>
+        <button type="button" data-action="close-modal" class="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: STRIPE MALAYSIA FPX CHECKOUT -->
-  <div id="stripeModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200">
+  <!-- MODAL: BUY ME A KOPI -->
+  <div id="kopiModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="kopiTitle" data-modal-root>
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div class="flex items-center space-x-2">
-          <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i>
-          <h3 class="font-bold text-slate-900">MyBizTools.my Ad-Free Pro Pass</h3>
+          <i data-lucide="coffee" class="w-5 h-5 text-amber-500" aria-hidden="true"></i>
+          <h2 id="kopiTitle" class="font-bold text-slate-900">Buy me a kopi</h2>
         </div>
-        <button onclick="closeModal('stripeModal')" class="text-slate-400 hover:text-slate-600">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <button type="button" data-action="close-modal" aria-label="Close" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
       </div>
 
       <div class="py-4">
-        <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 text-center mb-4">
-          <span class="text-xs uppercase font-bold text-blue-700 tracking-wider">One-Time Payment • No Subscription</span>
-          <div class="text-3xl font-extrabold text-slate-900 mt-1">RM 25.00</div>
-          <p class="text-xs text-slate-600 mt-1">Pay once via FPX, GrabPay, or Card. Removes all ads forever.</p>
+        <p class="text-xs text-slate-600 leading-relaxed mb-4">MyBizTools.my is built and maintained independently in Malaysia, and every tool is free. If a tool saved you time, an optional tip helps cover the annual <code>.my</code> domain renewal. Tips are a thank-you for the tools you have already used, not a purchase.</p>
+
+        <div class="grid grid-cols-3 gap-2.5 mb-4" role="group" aria-label="Tip amount">
+          <button type="button" data-action="kopi-amount" data-amount="10" id="kopi-10" class="kopi-btn border-2 border-amber-500 bg-amber-50 text-slate-900 rounded-xl p-3 text-center transition" aria-pressed="true">
+            <div class="text-base font-extrabold">RM 10</div><div class="text-[10px] font-semibold text-amber-700">A kopi peng</div>
+          </button>
+          <button type="button" data-action="kopi-amount" data-amount="20" id="kopi-20" class="kopi-btn border border-slate-200 hover:border-amber-400 rounded-xl p-3 text-center transition" aria-pressed="false">
+            <div class="text-base font-extrabold text-slate-800">RM 20</div><div class="text-[10px] text-slate-500">Kopi + roti</div>
+          </button>
+          <button type="button" data-action="kopi-amount" data-amount="50" id="kopi-50" class="kopi-btn border border-slate-200 hover:border-amber-400 rounded-xl p-3 text-center transition" aria-pressed="false">
+            <div class="text-base font-extrabold text-slate-800">RM 50</div><div class="text-[10px] text-slate-500">Kopi for the team</div>
+          </button>
         </div>
-        <button onclick="activateAdFreeMode()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm shadow-sm transition">
-          Pay RM 25.00 via Stripe Malaysia (FPX / Card)
+
+        <button type="button" id="kopiSubmitBtn" data-action="kopi-checkout"
+          class="w-full py-3 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-xs sm:text-sm shadow-md transition">
+          Continue to secure checkout
         </button>
-        <div class="mt-4 pt-4 border-t border-slate-100">
-          <label class="block text-xs font-medium text-slate-600 mb-1.5">Already purchased? Enter License Key:</label>
-          <div class="flex gap-2">
-            <input type="text" id="licenseInput" placeholder="e.g. MBT-PRO-2026" class="flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs" />
-            <button onclick="activateAdFreeMode()" class="px-3 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-medium">Activate</button>
-          </div>
-        </div>
+        <p id="kopiNote" class="text-[11px] text-slate-500 text-center mt-3" role="status"></p>
+        <p class="text-[11px] text-slate-400 text-center mt-1">Optional • Payment handled by Stripe</p>
       </div>
     </div>
   </div>
 
-  <!-- MODULAR APPLICATION LOGIC -->
+  <!-- TOOL TEMPLATE: SST & PROFIT MARGIN CALCULATOR -->
+  <template id="tpl-sst-calculator">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <div>
+          <label for="sst-rate" class="block text-xs font-semibold text-slate-700 mb-1">Tax type and rate</label>
+          <select id="sst-rate" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="800">Service tax 8% (most taxable services)</option>
+            <option value="600">Service tax 6% (F&amp;B, telecommunications, parking, logistics)</option>
+            <option value="1000">Sales tax 10% (most taxable goods)</option>
+            <option value="500">Sales tax 5% (selected goods)</option>
+            <option value="0">No SST (not registered / exempt)</option>
+          </select>
+          <p class="mt-1 text-[11px] text-slate-400">Rates as at October 2026. Which rate applies depends on your goods or service category.</p>
+        </div>
+
+        <fieldset>
+          <legend class="block text-xs font-semibold text-slate-700 mb-1">The price you enter is</legend>
+          <div class="flex gap-4 text-sm">
+            <label class="flex items-center gap-2"><input type="radio" name="sst-mode" value="excl" checked /> Before tax</label>
+            <label class="flex items-center gap-2"><input type="radio" name="sst-mode" value="incl" /> Including tax</label>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="sst-amount" class="block text-xs font-semibold text-slate-700 mb-1">Price (RM)</label>
+          <input id="sst-amount" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 1,250.00" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="sst-cost" class="block text-xs font-semibold text-slate-700 mb-1">Your cost (RM) <span class="font-normal text-slate-400">— optional, for margin</span></label>
+          <input id="sst-cost" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 800.00" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <label class="flex items-start gap-2 text-sm text-slate-700">
+          <input id="sst-round" type="checkbox" class="mt-1" />
+          <span>Cash payment: round the total to the nearest 5 sen<br /><span class="text-[11px] text-slate-400">Rounding applies to the final total only, and only to cash payments.</span></span>
+        </label>
+
+        <p id="sst-error" class="hidden text-xs text-rose-600" role="alert"></p>
+      </div>
+
+      <div class="rounded-xl border border-slate-200 bg-slate-50 p-5">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3">Result</h3>
+        <dl class="space-y-2 text-sm">
+          <div class="flex justify-between gap-4"><dt class="text-slate-500">Price before tax</dt><dd id="out-net" class="font-semibold text-slate-900">—</dd></div>
+          <div class="flex justify-between gap-4"><dt class="text-slate-500">Tax (<span id="out-rate">—</span>)</dt><dd id="out-tax" class="font-semibold text-slate-900">—</dd></div>
+          <div class="flex justify-between gap-4 border-t border-slate-200 pt-2"><dt class="text-slate-500">Total including tax</dt><dd id="out-gross" class="font-semibold text-slate-900">—</dd></div>
+          <div id="row-rounding" class="hidden flex justify-between gap-4"><dt class="text-slate-500">5-sen rounding</dt><dd id="out-adj" class="font-semibold text-slate-900">—</dd></div>
+          <div id="row-payable" class="hidden flex justify-between gap-4 border-t border-slate-200 pt-2"><dt class="font-semibold text-slate-700">Cash amount payable</dt><dd id="out-payable" class="text-base font-extrabold text-emerald-700">—</dd></div>
+        </dl>
+
+        <div id="margin-block" class="hidden mt-5 pt-4 border-t border-slate-200">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3">Profit (before tax)</h3>
+          <dl class="space-y-2 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Gross profit</dt><dd id="out-profit" class="font-semibold text-slate-900">—</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Margin (of selling price)</dt><dd id="out-margin" class="font-semibold text-slate-900">—</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Markup (on cost)</dt><dd id="out-markup" class="font-semibold text-slate-900">—</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="icons.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
