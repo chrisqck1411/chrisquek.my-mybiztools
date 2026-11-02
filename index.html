@@ -2,435 +2,338 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyBizTools.my | Free Malaysian Business Tools</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MyBizTools | Free Malaysian Business Tools</title>
   <meta name="description" content="Free Malaysia-focused business tools: SST and profit margin calculator with 5-sen cash rounding. More SME and PDF tools in development. Everything runs in your browser." />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#151B23" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href="https://mybiztools.chrisquek.my/" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mybiztools.chrisquek.my/" />
-  <meta property="og:title" content="MyBizTools.my | Free Malaysian Business Tools" />
+  <meta property="og:title" content="MyBizTools | Free Malaysian Business Tools" />
   <meta property="og:description" content="Free SST and profit margin calculator with 5-sen cash rounding. Runs in your browser." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='800' fill='white' text-anchor='middle'%3EMB%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231D4ED8'/%3E%3Ctext x='16' y='21.5' font-family='Arial' font-size='14' font-weight='800' fill='white' text-anchor='middle'%3EMB%3C/text%3E%3C/svg%3E" />
+  <script src="theme-init.js"></script>
+  <link rel="preload" href="plus-jakarta-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="plus-jakarta-sans-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
-  <noscript><style>.js-only{display:none}</style></noscript>
 </head>
-<body class="bg-[#f1f5f9] text-slate-800 min-h-screen flex flex-col">
+<body>
 
-  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:text-slate-900 focus:px-3 focus:py-2 focus:rounded">Skip to main content</a>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
-  <!-- TOP COMMAND BAR -->
-  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="./" data-action="go-home" class="flex items-center space-x-3" aria-label="MyBizTools.my home">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-inner border border-blue-400/30" aria-hidden="true">MB</div>
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="font-bold text-lg tracking-tight text-white">MyBizTools<span class="text-blue-400">.my</span></span>
-            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">MY SME EDITION</span>
-          </div>
-          <p class="text-[11px] text-slate-400 hidden sm:block">Business tools for Malaysian SMEs and freelancers</p>
-        </div>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="./" data-action="go-home" class="brand" aria-label="MyBizTools home">
+        <span class="brand-mark" aria-hidden="true">MB</span>
+        <span class="brand-name">MyBizTools</span>
       </a>
-
-      <div class="flex items-center space-x-2 sm:space-x-3">
-        <div class="hidden lg:flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-800/90 border border-slate-700 text-xs text-slate-300">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
-          <span>Runs in your browser</span>
+      <div class="header-actions">
+        <button type="button" class="btn" data-action="open-modal" data-modal="securityModal" aria-label="Data privacy and FAQ">
+          <i data-icon="shield-check"></i><span class="btn-label">Data privacy &amp; FAQ</span>
+        </button>
+        <button type="button" class="btn" data-action="open-modal" data-modal="kopiModal" aria-label="Buy me a kopi">
+          <i data-icon="coffee"></i><span class="btn-label">Buy me a kopi</span>
+        </button>
+        <div class="theme-toggle" role="group" aria-label="Colour theme">
+          <button type="button" data-action="set-theme" data-theme-value="light" aria-pressed="true" aria-label="Light theme">
+            <i data-icon="sun"></i><span class="btn-label">Light</span>
+          </button>
+          <button type="button" data-action="set-theme" data-theme-value="dark" aria-pressed="false" aria-label="Dark theme">
+            <i data-icon="moon"></i><span class="btn-label">Dark</span>
+          </button>
         </div>
-
-        <button type="button" data-action="open-modal" data-modal="securityModal"
-          class="text-xs sm:text-sm text-slate-300 hover:text-white px-3 py-2 rounded-lg hover:bg-slate-800 transition flex items-center space-x-1.5" aria-label="Data privacy and FAQ">
-          <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
-          <span class="hidden md:inline">Data Privacy &amp; FAQ</span>
-        </button>
-
-        <button type="button" data-action="open-modal" data-modal="kopiModal"
-          class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 text-xs sm:text-sm font-bold px-3.5 py-2 rounded-lg shadow-sm transition flex items-center space-x-1.5">
-          <i data-lucide="coffee" class="w-4 h-4" aria-hidden="true"></i>
-          <span>Buy Me a Kopi</span>
-        </button>
       </div>
     </div>
   </header>
 
-  <!-- HERO & SEARCH -->
-  <section class="hero-gradient text-white border-b border-slate-800" aria-label="Search tools">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-        <div>
-          <div class="inline-flex items-center space-x-2 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-400/20 text-blue-300 text-xs font-medium mb-2">
-            <i data-lucide="zap" class="w-3.5 h-3.5" aria-hidden="true"></i>
-            <span>Free to use • No sign-up • Built for Malaysian businesses</span>
-          </div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Executive Utility Workspace</h1>
-          <p class="text-xs sm:text-sm text-slate-300 mt-1 flex items-center gap-1.5 flex-wrap">
-            <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true"></i>
-            <span>Your figures and files are processed in your browser. Our tools do not upload them.</span>
-            <button type="button" data-action="open-modal" data-modal="securityModal" class="text-blue-400 hover:text-blue-300 underline">How this works</button>
-          </p>
-        </div>
-
-        <div class="w-full lg:w-96">
-          <div class="relative">
-            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" aria-hidden="true"></i>
-            <input type="search" id="toolSearch" autocomplete="off" aria-label="Search tools"
-              placeholder="Search tools (e.g. SST, margin, Merge PDF)..."
-              class="w-full pl-10 pr-4 py-2.5 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-inner" />
-          </div>
-          <div class="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-1" role="group" aria-label="Filter by category">
-            <button type="button" data-action="set-category" data-cat="all" class="cat-pill px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white transition" aria-pressed="true">All tools</button>
-            <button type="button" data-action="set-category" data-cat="finance" class="cat-pill px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" aria-pressed="false">MY Finance &amp; SST</button>
-            <button type="button" data-action="set-category" data-cat="pdf" class="cat-pill px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition" aria-pressed="false">Document &amp; PDF</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AD SLOT (leaderboard): add the AdSense snippet here only AFTER approval.
-       Reserve a fixed height (e.g. min-h-[90px]) to avoid layout shift. -->
-
-  <main id="main" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex-1 w-full">
+  <main id="main">
     <noscript>
-      <div class="mb-5 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">These tools need JavaScript to run in your browser. Please enable JavaScript and reload.</div>
+      <div class="wrap"><p class="panel panel-text">These tools need JavaScript to run in your browser. Please turn on JavaScript and reload the page.</p></div>
     </noscript>
 
-    <div class="flex flex-col lg:flex-row gap-7">
-
-      <div class="flex-1 min-w-0">
-
-        <!-- VIEW 1: DASHBOARD -->
-        <div id="dashboardView">
-
-          <p id="noResults" class="hidden mb-6 rounded-xl border border-slate-200 bg-white p-5 text-sm text-slate-600">No tools match your search. Try a different word, or switch the category to "All tools".</p>
-
-          <!-- SUITE A -->
-          <section class="mb-8 suite-section" data-suite="finance" aria-labelledby="suiteA">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-2.5 mb-4">
-              <div class="flex items-center space-x-2">
-                <div class="w-2.5 h-2.5 rounded-sm bg-blue-600" aria-hidden="true"></div>
-                <h2 id="suiteA" class="text-xs font-bold uppercase tracking-wider text-slate-700">Malaysian Business &amp; Financial Suite</h2>
-              </div>
-              <span class="text-[11px] font-medium text-slate-400">MYR • SST-ready</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <!-- SST calculator (LIVE) -->
-              <div role="button" tabindex="0" data-tool="sst-calculator" data-cat="finance"
-                data-name="sst tax profit margin calculator malaysia service tax sales tax 5 sen rounding"
-                class="tool-card card-hover bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-emerald-600 p-5 cursor-pointer flex flex-col justify-between shadow-sm">
-                <div>
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                      <i data-lucide="calculator" class="w-5 h-5" aria-hidden="true"></i>
-                    </div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">5-Sen Rounding</span>
-                  </div>
-                  <h3 class="font-bold text-base text-slate-900 mt-3.5">SST &amp; Profit Margin Calculator</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Work out service tax (8% or 6%) or sales tax (10% or 5%), tax-inclusive or tax-exclusive prices, profit margin and markup, and Bank Negara 5-sen cash rounding.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span class="text-slate-400 font-medium flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5" aria-hidden="true"></i> Instant</span>
-                  <span class="font-semibold text-emerald-600 flex items-center gap-1">Open tool <i data-lucide="arrow-right" class="w-3.5 h-3.5" aria-hidden="true"></i></span>
-                </div>
-              </div>
-
-              <!-- Sales report (COMING SOON) -->
-              <div data-cat="finance" aria-disabled="true"
-                data-name="sales report generator excel csv sst myr chart"
-                class="tool-card is-soon bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-blue-600 p-5 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                      <i data-lucide="bar-chart-3" class="w-5 h-5" aria-hidden="true"></i>
-                    </div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">In development</span>
-                  </div>
-                  <h3 class="font-bold text-base text-slate-900 mt-3.5">Sales Report Generator</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Enter transactions or load an Excel/CSV sheet to get a sales summary with MYR and SST breakdowns.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Coming soon</div>
-              </div>
-            </div>
-          </section>
-
-          <!-- SUITE B -->
-          <section class="mb-8 suite-section" data-suite="pdf" aria-labelledby="suiteB">
-            <div class="flex items-center justify-between border-b border-slate-200 pb-2.5 mb-4">
-              <div class="flex items-center space-x-2">
-                <div class="w-2.5 h-2.5 rounded-sm bg-indigo-600" aria-hidden="true"></div>
-                <h2 id="suiteB" class="text-xs font-bold uppercase tracking-wider text-slate-700">Document &amp; PDF Workflow Suite</h2>
-              </div>
-              <span class="text-[11px] font-medium text-slate-400">No daily limits • No uploads</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div data-cat="pdf" aria-disabled="true" data-name="merge pdf combine join documents"
-                class="tool-card is-soon bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-indigo-600 p-5 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-                      <i data-lucide="files" class="w-5 h-5" aria-hidden="true"></i>
-                    </div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">In development</span>
-                  </div>
-                  <h3 class="font-bold text-base text-slate-900 mt-3.5">Merge PDF Documents</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Combine several PDFs into one file, right in your browser.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Coming soon</div>
-              </div>
-
-              <div data-cat="pdf" aria-disabled="true" data-name="split extract pdf pages separate"
-                class="tool-card is-soon bg-white rounded-xl border border-slate-200/90 border-t-4 border-t-violet-600 p-5 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div class="flex items-start justify-between gap-3">
-                    <div class="w-11 h-11 rounded-xl bg-violet-50 border border-violet-100 text-violet-600 flex items-center justify-center shrink-0">
-                      <i data-lucide="scissors" class="w-5 h-5" aria-hidden="true"></i>
-                    </div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 border border-slate-200">In development</span>
-                  </div>
-                  <h3 class="font-bold text-base text-slate-900 mt-3.5">Split &amp; Extract PDF</h3>
-                  <p class="text-xs text-slate-500 mt-1 leading-relaxed">Pull out page ranges or split a PDF into separate files.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5" aria-hidden="true"></i> Coming soon</div>
-              </div>
-            </div>
-          </section>
-
-          <!-- PHASE 2 -->
-          <section class="bg-white rounded-xl border border-slate-200/90 p-5 shadow-sm" aria-labelledby="phase2">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-              <div>
-                <h2 id="phase2" class="text-xs font-bold uppercase tracking-wider text-slate-700">Phase 2 — Tell us what to build next</h2>
-                <p class="text-xs text-slate-500">Pick the tool you would use most.</p>
-              </div>
-              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md" id="voteFeedback" role="status" aria-live="polite">Tap a tool to suggest it</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-              <button type="button" data-action="vote" data-tool-name="Invoice & Quotation Maker" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
-                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Invoice &amp; Quotation</h3></div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
-              </button>
-              <button type="button" data-action="vote" data-tool-name="Payment Voucher Maker" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
-                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Payment Voucher</h3></div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
-              </button>
-              <button type="button" data-action="vote" data-tool-name="Compress PDF" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
-                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Compress PDF</h3></div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
-              </button>
-              <button type="button" data-action="vote" data-tool-name="Sign & Company Chop PDF" class="text-left bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-lg border border-slate-200 hover:border-blue-300 transition flex items-center justify-between group">
-                <div><span class="text-[10px] font-bold uppercase text-slate-400 group-hover:text-blue-600">Upcoming</span><h3 class="font-semibold text-xs text-slate-800 mt-0.5">Sign &amp; Company Chop</h3></div>
-                <i data-lucide="thumbs-up" class="w-4 h-4 text-slate-400 group-hover:text-blue-600" aria-hidden="true"></i>
-              </button>
-            </div>
-          </section>
+    <!-- ===================== HOME VIEW ===================== -->
+    <div id="homeView">
+      <div class="wrap intro">
+        <div class="intro-row">
+          <div class="intro-text">
+            <h1 class="page-title">Business tools for Malaysian SMEs</h1>
+            <p class="lede">
+              <i data-icon="lock" data-size="16"></i>
+              <span>Free to use, no sign-up. Your figures and files stay in your browser.</span>
+              <button type="button" class="link-btn" data-action="open-modal" data-modal="securityModal">How this works</button>
+            </p>
+          </div>
+          <div class="search">
+            <label for="toolSearch" class="sr-only">Search tools</label>
+            <i data-icon="search"></i>
+            <input id="toolSearch" type="search" autocomplete="off" placeholder="Search tools, e.g. SST or PDF" />
+          </div>
         </div>
 
-        <!-- VIEW 2: TOOL WORKSPACE -->
-        <div id="toolWorkspaceView" class="hidden bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-          <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
-            <button type="button" data-action="go-home" class="text-xs font-semibold text-slate-600 hover:text-blue-600 flex items-center space-x-1.5 bg-slate-100 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition">
-              <i data-lucide="arrow-left" class="w-4 h-4" aria-hidden="true"></i>
-              <span>All tools</span>
-            </button>
-            <span class="text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-md">Runs in your browser</span>
-          </div>
-
-          <h2 id="activeToolTitle" class="text-xl font-bold text-slate-900" tabindex="-1">Tool</h2>
-          <p id="activeToolDesc" class="text-xs sm:text-sm text-slate-500 mt-1 mb-6"></p>
-
-          <div id="toolModuleContainer"></div>
-
-          <div class="mt-6 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400">
-            <span>Reference tool only — not tax or accounting advice. Confirm rates with the Royal Malaysian Customs Department (MySST).</span>
-            <button type="button" data-action="open-modal" data-modal="securityModal" class="text-slate-500 hover:text-blue-600 underline font-medium text-left sm:text-right">Data policy / Clear memory</button>
-          </div>
+        <div class="tabs" role="group" aria-label="Filter by category">
+          <button type="button" class="tab" data-action="set-category" data-cat="all" aria-pressed="true">All tools</button>
+          <button type="button" class="tab" data-action="set-category" data-cat="finance" aria-pressed="false">MY Finance &amp; SST</button>
+          <button type="button" class="tab" data-action="set-category" data-cat="pdf" aria-pressed="false">Document &amp; PDF</button>
         </div>
       </div>
 
-      <!-- SIDEBAR -->
-      <aside class="w-full lg:w-80 shrink-0 space-y-5" aria-label="Support and information">
-        <!-- AD SLOT (rectangle 300x250): add the AdSense snippet here only AFTER approval. -->
+      <!-- AD SLOT (leaderboard): add the AdSense snippet here only AFTER approval,
+           and only after the Content-Security-Policy in _headers is updated. -->
 
-        <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-xl p-5 shadow-md border border-slate-700">
-          <div class="flex items-center space-x-2.5 mb-2">
-            <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-400/30 text-amber-400 flex items-center justify-center">
-              <i data-lucide="coffee" class="w-4 h-4" aria-hidden="true"></i>
+      <div class="wrap layout">
+        <div class="main-col">
+
+          <p id="noResults" class="panel empty-note" hidden>No tools match your search. Try a different word, or choose "All tools".</p>
+
+          <section class="suite-section" data-suite="finance" aria-labelledby="suiteA">
+            <h2 id="suiteA" class="section-label">Finance &amp; SST</h2>
+            <div class="card-grid">
+              <article class="card tool-card" data-cat="finance"
+                data-name="sst tax profit margin calculator malaysia service tax sales tax 5 sen rounding markup">
+                <div class="card-top">
+                  <span class="icon-tile" aria-hidden="true"><i data-icon="calculator" data-size="20"></i></span>
+                  <span class="chip chip-live"><span class="chip-dot" aria-hidden="true"></span>Live</span>
+                </div>
+                <div>
+                  <h3>SST &amp; Profit Margin Calculator</h3>
+                  <p>Service tax (8% or 6%) and sales tax (10% or 5%), tax-inclusive or tax-exclusive prices, profit margin, markup and 5-sen cash rounding.</p>
+                </div>
+                <div class="card-foot">
+                  <a href="#sst-calculator" class="link-strong">Open tool <i data-icon="arrow-right" data-size="16"></i></a>
+                </div>
+              </article>
+
+              <article class="card tool-card" data-cat="finance"
+                data-name="sales report generator excel csv sst myr summary">
+                <div class="card-top">
+                  <span class="icon-tile" aria-hidden="true"><i data-icon="chart" data-size="20"></i></span>
+                  <span class="chip">In development</span>
+                </div>
+                <div>
+                  <h3>Sales Report Generator</h3>
+                  <p>Enter transactions or load an Excel or CSV sheet to get a sales summary with MYR and SST breakdowns.</p>
+                </div>
+                <div class="card-foot"><span class="soon"><i data-icon="clock" data-size="16"></i> Coming soon</span></div>
+              </article>
             </div>
-            <div>
-              <h2 class="font-bold text-sm text-white">Saved you time today?</h2>
-              <p class="text-[11px] text-slate-400">Free, independent Malaysian project</p>
+          </section>
+
+          <section class="suite-section" data-suite="pdf" aria-labelledby="suiteB">
+            <h2 id="suiteB" class="section-label">Documents &amp; PDF</h2>
+            <div class="card-grid">
+              <article class="card tool-card" data-cat="pdf" data-name="merge pdf combine join documents">
+                <div class="card-top">
+                  <span class="icon-tile" aria-hidden="true"><i data-icon="files" data-size="20"></i></span>
+                  <span class="chip">In development</span>
+                </div>
+                <div>
+                  <h3>Merge PDF</h3>
+                  <p>Combine several PDFs into one file, right in your browser.</p>
+                </div>
+                <div class="card-foot"><span class="soon"><i data-icon="clock" data-size="16"></i> Coming soon</span></div>
+              </article>
+
+              <article class="card tool-card" data-cat="pdf" data-name="split extract pdf pages separate">
+                <div class="card-top">
+                  <span class="icon-tile" aria-hidden="true"><i data-icon="scissors" data-size="20"></i></span>
+                  <span class="chip">In development</span>
+                </div>
+                <div>
+                  <h3>Split &amp; Extract PDF</h3>
+                  <p>Pull out page ranges or split a PDF into separate files.</p>
+                </div>
+                <div class="card-foot"><span class="soon"><i data-icon="clock" data-size="16"></i> Coming soon</span></div>
+              </article>
             </div>
+          </section>
+
+          <section class="panel" aria-labelledby="voteTitle">
+            <h2 id="voteTitle" class="panel-title">What should we build next?</h2>
+            <p class="vote-sub">Pick the tool you would use most.</p>
+            <div class="vote-grid">
+              <button type="button" class="vote-btn" data-action="vote" data-tool-name="Invoice &amp; Quotation"><span>Invoice &amp; Quotation</span><i data-icon="thumbs-up" data-size="16"></i></button>
+              <button type="button" class="vote-btn" data-action="vote" data-tool-name="Payment Voucher"><span>Payment Voucher</span><i data-icon="thumbs-up" data-size="16"></i></button>
+              <button type="button" class="vote-btn" data-action="vote" data-tool-name="Compress PDF"><span>Compress PDF</span><i data-icon="thumbs-up" data-size="16"></i></button>
+              <button type="button" class="vote-btn" data-action="vote" data-tool-name="Sign &amp; Company Chop"><span>Sign &amp; Company Chop</span><i data-icon="thumbs-up" data-size="16"></i></button>
+            </div>
+            <p id="voteFeedback" class="vote-status" role="status" aria-live="polite"></p>
+          </section>
+        </div>
+
+        <aside class="aside" aria-label="Support and information">
+          <!-- AD SLOT (rectangle 300x250): add the AdSense snippet here only AFTER approval. -->
+          <div class="panel">
+            <h2 class="panel-title"><i data-icon="shield-check" class="icon-ok"></i>Your data</h2>
+            <p class="panel-text">Working data stays in this tab's memory and clears after 30 minutes of inactivity, or when you close the tab.</p>
+            <button type="button" class="link-btn" data-action="open-modal" data-modal="securityModal">Read the details</button>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed mt-2 mb-4">MyBizTools.my has no paywalls or daily limits. If a tool helped your work, you can say thanks with an optional tip.</p>
-          <button type="button" data-action="open-modal" data-modal="kopiModal" class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-lg shadow transition">Buy Me a Kopi</button>
-        </div>
+          <div class="panel">
+            <h2 class="panel-title"><i data-icon="coffee" class="icon-accent"></i>Saved you time?</h2>
+            <p class="panel-text">Every tool is free. An optional tip helps cover the yearly domain renewal.</p>
+            <button type="button" class="btn" data-action="open-modal" data-modal="kopiModal">Buy me a kopi</button>
+          </div>
+        </aside>
+      </div>
+    </div>
 
-        <div class="bg-white border border-slate-200/90 rounded-xl p-5 shadow-sm">
-          <h2 class="font-bold text-sm text-slate-900 flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600" aria-hidden="true"></i> Your data</h2>
-          <p class="text-xs text-slate-500 mt-2 leading-relaxed">Working data stays in your browser's memory and clears automatically after 30 minutes of inactivity.</p>
-          <button type="button" data-action="open-modal" data-modal="securityModal" class="mt-3 text-xs font-semibold text-blue-600 hover:text-blue-700 underline">Read the details</button>
-        </div>
-      </aside>
+    <!-- ===================== TOOL VIEW ===================== -->
+    <div id="toolView" hidden>
+      <div class="wrap tool-head">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="./" data-action="go-home" class="link-strong"><i data-icon="arrow-left" data-size="16"></i> All tools</a>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="here" id="crumbHere">Tool</span>
+        </nav>
+        <h1 id="activeToolTitle" class="page-title" tabindex="-1">Tool</h1>
+        <p id="activeToolDesc" class="tool-desc"></p>
+      </div>
+
+      <div id="toolModuleContainer"></div>
+
+      <div class="wrap">
+        <p class="tool-note">Reference tool only, not tax or accounting advice. Confirm rates with the Royal Malaysian Customs Department (MySST).
+          <button type="button" class="link-btn" data-action="open-modal" data-modal="securityModal">Data privacy and clearing memory</button></p>
+      </div>
     </div>
   </main>
 
-  <footer class="bg-white border-t border-slate-200 mt-12 py-5 text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© 2026 <strong>MyBizTools.my</strong> — Independent business &amp; document tools for Malaysia.</div>
-      <div class="flex items-center space-x-4">
-        <button type="button" data-action="open-modal" data-modal="securityModal" class="hover:text-slate-900 underline">Data privacy &amp; FAQ</button>
-        <span aria-hidden="true">•</span>
-        <button type="button" data-action="open-modal" data-modal="kopiModal" class="hover:text-amber-600 font-medium">Buy Me a Kopi</button>
-      </div>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>&copy; 2026 MyBizTools — independent business tools for Malaysia. Reference tools only, not tax or accounting advice.</span>
+      <span class="footer-links">
+        <button type="button" class="link-btn" data-action="open-modal" data-modal="securityModal">Data privacy &amp; FAQ</button>
+        <button type="button" class="link-btn" data-action="open-modal" data-modal="kopiModal">Buy me a kopi</button>
+      </span>
     </div>
   </footer>
 
-  <!-- MODAL: PRIVACY & FAQ -->
-  <div id="securityModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="securityTitle" data-modal-root>
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div class="flex items-center space-x-2">
-          <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600" aria-hidden="true"></i>
-          <h2 id="securityTitle" class="font-bold text-slate-900">Data privacy &amp; FAQ</h2>
-        </div>
-        <button type="button" data-action="close-modal" aria-label="Close" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
+  <!-- ===================== MODAL: PRIVACY & FAQ ===================== -->
+  <div id="securityModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="securityTitle" data-modal-root hidden>
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="securityTitle"><i data-icon="shield-check"></i>Data privacy &amp; FAQ</h2>
+        <button type="button" class="icon-btn" data-action="close-modal" aria-label="Close"><i data-icon="x" data-size="20"></i></button>
       </div>
-
-      <div class="py-4 space-y-4 text-xs text-slate-600 leading-relaxed">
+      <div class="modal-body">
         <div>
-          <h3 class="font-bold text-slate-900 text-sm">Where do my figures and files go?</h3>
-          <p class="mt-1">Our tools process them inside your browser. They are not uploaded to our servers, and we do not keep copies.</p>
+          <h3>Where do my figures and files go?</h3>
+          <p>Our tools process them inside your browser. They are not uploaded to our servers, and we do not keep copies.</p>
         </div>
         <div>
-          <h3 class="font-bold text-slate-900 text-sm">How long is working data kept?</h3>
-          <p class="mt-1">Only in this tab's memory, so you can adjust settings without retyping. It clears when you press <em>Clear memory</em>, after 30 minutes of inactivity, or when you close or leave the tab.</p>
+          <h3>How long is working data kept?</h3>
+          <p>Only in this tab's memory, so you can adjust settings without retyping. It clears when you press "Clear memory", after 30 minutes of inactivity, or when you close or leave the tab.</p>
         </div>
         <div>
-          <h3 class="font-bold text-slate-900 text-sm">Can I check this myself?</h3>
-          <p class="mt-1">Yes. Open your browser's developer tools, go to the Network tab, use a tool, and confirm that no request carries your data. Ads, once enabled, are loaded by Google and are covered by the Privacy Policy.</p>
+          <h3>Does the site save anything on my device?</h3>
+          <p>Only your Light or Dark choice, if you pick one, so the page looks the same next time. No figures, files or personal details are saved.</p>
         </div>
-
-        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <span class="font-bold text-slate-800">Session activity log</span>
-            <div class="space-x-2">
-              <button type="button" data-action="purge" class="text-rose-600 hover:underline font-semibold">Clear memory</button>
-              <span aria-hidden="true">|</span>
-              <button type="button" data-action="download-receipt" class="text-blue-600 hover:underline font-semibold">Download session receipt (.txt)</button>
-            </div>
+        <div>
+          <h3>Can I check this myself?</h3>
+          <p>Yes. Open your browser's developer tools, go to the Network tab, use a tool, and confirm that no request carries your data. Ads, once enabled, are loaded by Google and will be covered by the Privacy Policy.</p>
+        </div>
+        <div class="log-box">
+          <div class="log-head">
+            <strong>Session activity log</strong>
+            <span class="log-actions">
+              <button type="button" class="link-btn" data-action="purge">Clear memory</button>
+              <button type="button" class="link-btn" data-action="download-receipt">Download session receipt (.txt)</button>
+            </span>
           </div>
-          <pre id="sessionAuditLog" class="bg-slate-900 text-emerald-400 p-2.5 rounded-lg text-[11px] font-mono overflow-x-auto max-h-28" aria-live="polite"></pre>
-          <p class="mt-2 text-[11px] text-slate-400">The receipt is generated by this page from its own log. It is a convenience record, not an independent audit.</p>
+          <pre id="sessionAuditLog" class="log" aria-live="polite"></pre>
+          <p class="log-note">The receipt is generated by this page from its own log. It is a convenience record, not an independent audit.</p>
         </div>
       </div>
-
-      <div class="pt-2 flex justify-end">
-        <button type="button" data-action="close-modal" class="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg">Close</button>
+      <div class="modal-foot">
+        <button type="button" class="btn" data-action="close-modal">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: BUY ME A KOPI -->
-  <div id="kopiModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="kopiTitle" data-modal-root>
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <div class="flex items-center space-x-2">
-          <i data-lucide="coffee" class="w-5 h-5 text-amber-500" aria-hidden="true"></i>
-          <h2 id="kopiTitle" class="font-bold text-slate-900">Buy me a kopi</h2>
-        </div>
-        <button type="button" data-action="close-modal" aria-label="Close" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
+  <!-- ===================== MODAL: BUY ME A KOPI ===================== -->
+  <div id="kopiModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="kopiTitle" data-modal-root hidden>
+    <div class="modal-box narrow">
+      <div class="modal-head">
+        <h2 id="kopiTitle"><i data-icon="coffee"></i>Buy me a kopi</h2>
+        <button type="button" class="icon-btn" data-action="close-modal" aria-label="Close"><i data-icon="x" data-size="20"></i></button>
       </div>
-
-      <div class="py-4">
-        <p class="text-xs text-slate-600 leading-relaxed mb-4">MyBizTools.my is built and maintained independently in Malaysia, and every tool is free. If a tool saved you time, an optional tip helps cover the annual <code>.my</code> domain renewal. Tips are a thank-you for the tools you have already used, not a purchase.</p>
-
-        <div class="grid grid-cols-3 gap-2.5 mb-4" role="group" aria-label="Tip amount">
-          <button type="button" data-action="kopi-amount" data-amount="10" id="kopi-10" class="kopi-btn border-2 border-amber-500 bg-amber-50 text-slate-900 rounded-xl p-3 text-center transition" aria-pressed="true">
-            <div class="text-base font-extrabold">RM 10</div><div class="text-[10px] font-semibold text-amber-700">A kopi peng</div>
-          </button>
-          <button type="button" data-action="kopi-amount" data-amount="20" id="kopi-20" class="kopi-btn border border-slate-200 hover:border-amber-400 rounded-xl p-3 text-center transition" aria-pressed="false">
-            <div class="text-base font-extrabold text-slate-800">RM 20</div><div class="text-[10px] text-slate-500">Kopi + roti</div>
-          </button>
-          <button type="button" data-action="kopi-amount" data-amount="50" id="kopi-50" class="kopi-btn border border-slate-200 hover:border-amber-400 rounded-xl p-3 text-center transition" aria-pressed="false">
-            <div class="text-base font-extrabold text-slate-800">RM 50</div><div class="text-[10px] text-slate-500">Kopi for the team</div>
-          </button>
+      <div class="modal-body">
+        <p>MyBizTools is built and maintained independently in Malaysia, and every tool is free. If a tool saved you time, an optional tip helps cover the yearly domain renewal. Tips are a thank-you for tools you have already used, not a purchase.</p>
+        <div class="tip-grid" role="group" aria-label="Tip amount">
+          <button type="button" class="tip-option" id="kopi-10" data-action="kopi-amount" data-amount="10" aria-pressed="true"><span class="tip-amount">RM 10</span><span class="tip-label">A kopi peng</span></button>
+          <button type="button" class="tip-option" id="kopi-20" data-action="kopi-amount" data-amount="20" aria-pressed="false"><span class="tip-amount">RM 20</span><span class="tip-label">Kopi + roti</span></button>
+          <button type="button" class="tip-option" id="kopi-50" data-action="kopi-amount" data-amount="50" aria-pressed="false"><span class="tip-amount">RM 50</span><span class="tip-label">Kopi for the team</span></button>
         </div>
-
-        <button type="button" id="kopiSubmitBtn" data-action="kopi-checkout"
-          class="w-full py-3 bg-slate-900 hover:bg-slate-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-xs sm:text-sm shadow-md transition">
-          Continue to secure checkout
-        </button>
-        <p id="kopiNote" class="text-[11px] text-slate-500 text-center mt-3" role="status"></p>
-        <p class="text-[11px] text-slate-400 text-center mt-1">Optional • Payment handled by Stripe</p>
+        <button type="button" id="kopiSubmitBtn" class="btn btn-primary" data-action="kopi-checkout">Continue to secure checkout</button>
+        <p id="kopiNote" class="tip-note" role="status"></p>
+        <p class="tip-small">Optional. Payment handled by Stripe.</p>
       </div>
     </div>
   </div>
 
-  <!-- TOOL TEMPLATE: SST & PROFIT MARGIN CALCULATOR -->
+  <!-- ===================== TOOL TEMPLATE: SST CALCULATOR ===================== -->
   <template id="tpl-sst-calculator">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="space-y-4">
+    <div class="wrap tool-layout">
+      <section class="form-card" aria-label="Inputs">
         <div>
-          <label for="sst-rate" class="block text-xs font-semibold text-slate-700 mb-1">Tax type and rate</label>
-          <select id="sst-rate" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label for="sst-rate" class="field-label">Tax type and rate</label>
+          <select id="sst-rate" class="select">
             <option value="800">Service tax 8% (most taxable services)</option>
-            <option value="600">Service tax 6% (F&amp;B, telecommunications, parking, logistics)</option>
+            <option value="600">Service tax 6% (F&amp;B, telecoms, parking, logistics)</option>
             <option value="1000">Sales tax 10% (most taxable goods)</option>
             <option value="500">Sales tax 5% (selected goods)</option>
-            <option value="0">No SST (not registered / exempt)</option>
+            <option value="0">No SST (not registered or exempt)</option>
           </select>
-          <p class="mt-1 text-[11px] text-slate-400">Rates as at October 2026. Which rate applies depends on your goods or service category.</p>
+          <p class="hint">Rates as at October 2026. Which rate applies depends on your goods or service category.</p>
         </div>
 
-        <fieldset>
-          <legend class="block text-xs font-semibold text-slate-700 mb-1">The price you enter is</legend>
-          <div class="flex gap-4 text-sm">
-            <label class="flex items-center gap-2"><input type="radio" name="sst-mode" value="excl" checked /> Before tax</label>
-            <label class="flex items-center gap-2"><input type="radio" name="sst-mode" value="incl" /> Including tax</label>
+        <fieldset class="plain">
+          <legend>The price you enter is</legend>
+          <div class="radio-row">
+            <label><input type="radio" name="sst-mode" value="excl" checked /> Before tax</label>
+            <label><input type="radio" name="sst-mode" value="incl" /> Including tax</label>
           </div>
         </fieldset>
 
         <div>
-          <label for="sst-amount" class="block text-xs font-semibold text-slate-700 mb-1">Price (RM)</label>
-          <input id="sst-amount" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 1,250.00" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label for="sst-amount" class="field-label">Price (RM)</label>
+          <input id="sst-amount" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 1,250.00" />
         </div>
 
         <div>
-          <label for="sst-cost" class="block text-xs font-semibold text-slate-700 mb-1">Your cost (RM) <span class="font-normal text-slate-400">— optional, for margin</span></label>
-          <input id="sst-cost" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 800.00" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <label for="sst-cost" class="field-label">Your cost (RM) <span class="opt">— optional, for margin</span></label>
+          <input id="sst-cost" class="input" type="text" inputmode="decimal" autocomplete="off" placeholder="e.g. 800.00" />
         </div>
 
-        <label class="flex items-start gap-2 text-sm text-slate-700">
-          <input id="sst-round" type="checkbox" class="mt-1" />
-          <span>Cash payment: round the total to the nearest 5 sen<br /><span class="text-[11px] text-slate-400">Rounding applies to the final total only, and only to cash payments.</span></span>
+        <label class="check">
+          <input id="sst-round" type="checkbox" />
+          <span>Cash payment: round the total to the nearest 5 sen
+            <span class="hint">Applies to the final total only, and only to cash payments.</span></span>
         </label>
 
-        <p id="sst-error" class="hidden text-xs text-rose-600" role="alert"></p>
-      </div>
+        <p id="sst-error" class="error" role="alert" hidden></p>
+      </section>
 
-      <div class="rounded-xl border border-slate-200 bg-slate-50 p-5">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3">Result</h3>
-        <dl class="space-y-2 text-sm">
-          <div class="flex justify-between gap-4"><dt class="text-slate-500">Price before tax</dt><dd id="out-net" class="font-semibold text-slate-900">—</dd></div>
-          <div class="flex justify-between gap-4"><dt class="text-slate-500">Tax (<span id="out-rate">—</span>)</dt><dd id="out-tax" class="font-semibold text-slate-900">—</dd></div>
-          <div class="flex justify-between gap-4 border-t border-slate-200 pt-2"><dt class="text-slate-500">Total including tax</dt><dd id="out-gross" class="font-semibold text-slate-900">—</dd></div>
-          <div id="row-rounding" class="hidden flex justify-between gap-4"><dt class="text-slate-500">5-sen rounding</dt><dd id="out-adj" class="font-semibold text-slate-900">—</dd></div>
-          <div id="row-payable" class="hidden flex justify-between gap-4 border-t border-slate-200 pt-2"><dt class="font-semibold text-slate-700">Cash amount payable</dt><dd id="out-payable" class="text-base font-extrabold text-emerald-700">—</dd></div>
-        </dl>
-
-        <div id="margin-block" class="hidden mt-5 pt-4 border-t border-slate-200">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-3">Profit (before tax)</h3>
-          <dl class="space-y-2 text-sm">
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Gross profit</dt><dd id="out-profit" class="font-semibold text-slate-900">—</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Margin (of selling price)</dt><dd id="out-margin" class="font-semibold text-slate-900">—</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Markup (on cost)</dt><dd id="out-markup" class="font-semibold text-slate-900">—</dd></div>
+      <section class="result-col" aria-label="Result">
+        <div class="result-card">
+          <h2 class="section-label">Tax result</h2>
+          <dl class="rows">
+            <div class="row"><dt>Price before tax</dt><dd id="out-net">—</dd></div>
+            <div class="row"><dt>Tax (<span id="out-rate">8%</span>)</dt><dd id="out-tax">—</dd></div>
+            <div class="row rule"><dt>Total including tax</dt><dd id="out-gross">—</dd></div>
+            <div class="row" id="row-rounding" hidden><dt>5-sen rounding</dt><dd id="out-adj">—</dd></div>
+            <div class="row rule payable" id="row-payable" hidden><dt>Cash amount payable</dt><dd id="out-payable">—</dd></div>
           </dl>
         </div>
-      </div>
+        <div class="result-card" id="margin-block" hidden>
+          <h2 class="section-label">Profit, before tax</h2>
+          <dl class="rows">
+            <div class="row"><dt>Gross profit</dt><dd id="out-profit">—</dd></div>
+            <div class="row"><dt>Margin (of selling price)</dt><dd id="out-margin">—</dd></div>
+            <div class="row"><dt>Markup (on cost)</dt><dd id="out-markup">—</dd></div>
+          </dl>
+        </div>
+      </section>
     </div>
   </template>
 

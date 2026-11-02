@@ -1,11 +1,12 @@
-/* MyBizTools.my — app.js
- * No inline handlers (CSP-friendly). Working data lives in JS memory only. */
+/* MyBizTools: app.js
+ * No inline handlers (CSP-friendly). Working data lives in JS memory only.
+ * The only thing saved on the device is the Light/Dark choice (localStorage 'mbt-theme'). */
 (function () {
   'use strict';
 
   /* ---------- CONFIG: fill these in when ready ---------- */
   const CONFIG = {
-    APP_VERSION: '2026.10.29-a',
+    APP_VERSION: '2026.11.02-a',
     // Stripe Payment Links, one per tip amount. Leave '' until your Stripe account is approved.
     // Format: 'https://buy.stripe.com/xxxxxxxx'
     STRIPE_LINKS: { 10: '', 20: '', 50: '' },
@@ -18,19 +19,18 @@
   const TOOLS = {
     'sst-calculator': {
       title: 'SST & Profit Margin Calculator',
-      desc: 'Calculate service tax (8% or 6%) or sales tax (10% or 5%), tax-inclusive or tax-exclusive prices, profit margin and markup, and 5-sen cash rounding.',
+      desc: 'Work out service or sales tax on a price, then see your profit margin and markup. Reference tool only, not tax advice.',
       template: 'tpl-sst-calculator',
       init: initSstCalculator
     }
   };
 
-  const PILL_ACTIVE = 'cat-pill px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white transition';
-  const PILL_IDLE = 'cat-pill px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
-  const KOPI_ACTIVE = 'kopi-btn border-2 border-amber-500 bg-amber-50 text-slate-900 rounded-xl p-3 text-center transition';
-  const KOPI_IDLE = 'kopi-btn border border-slate-200 hover:border-amber-400 rounded-xl p-3 text-center transition';
+  const SITE_NAME = 'MyBizTools';
+  const HOME_TITLE = SITE_NAME + ' | Free Malaysian Business Tools';
+  const THEME_KEY = 'mbt-theme';
 
   const $ = (id) => document.getElementById(id);
-  const refreshIcons = () => { if (window.MBTIcons) window.MBTIcons.refresh(); };
+  const refreshIcons = (root) => { if (window.MBTIcons) window.MBTIcons.refresh(root); };
 
   /* =====================================================
    * MONEY MATHS — integer sen only, no floating point sums
@@ -132,7 +132,7 @@
 
   function buildReceipt() {
     const lines = [
-      'MYBIZTOOLS.MY — SESSION RECEIPT',
+      'MYBIZTOOLS — SESSION RECEIPT',
       'Generated: ' + new Date().toISOString(),
       'Site version: ' + CONFIG.APP_VERSION,
       'Page: ' + location.origin + location.pathname,
@@ -141,6 +141,7 @@
       '- Working-data items held in this tab\'s memory: ' + Session.data.size,
       '- Temporary download links held: ' + Session.blobUrls.size,
       '- Automatic clearing: after 30 minutes of inactivity, or when the tab is closed',
+      '- Saved on this device: ' + (storedTheme() ? 'your ' + storedTheme() + ' theme choice only' : 'nothing'),
       '',
       'LAST "CLEAR" EVENT',
       Session.lastClear
@@ -187,9 +188,8 @@
     const m = $(id);
     if (!m) return;
     lastFocus = document.activeElement;
-    m.classList.remove('hidden');
-    m.classList.add('flex');
-    document.body.classList.add('overflow-hidden');
+    m.hidden = false;
+    document.body.classList.add('no-scroll');
     openModalId = id;
     if (id === 'securityModal') {
       const el = $('sessionAuditLog');
@@ -202,9 +202,8 @@
   function closeModal() {
     if (!openModalId) return;
     const m = $(openModalId);
-    m.classList.add('hidden');
-    m.classList.remove('flex');
-    document.body.classList.remove('overflow-hidden');
+    m.hidden = true;
+    document.body.classList.remove('no-scroll');
     openModalId = null;
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
@@ -226,9 +225,10 @@
    * ROUTING — #tool-key, so Back button and links work
    * ===================================================== */
   function showHome() {
-    $('toolWorkspaceView').classList.add('hidden');
-    $('dashboardView').classList.remove('hidden');
-    document.title = 'MyBizTools.my | Free Malaysian Business Tools';
+    $('toolView').hidden = true;
+    $('homeView').hidden = false;
+    $('toolModuleContainer').replaceChildren();
+    document.title = HOME_TITLE;
   }
 
   function showTool(key) {
@@ -241,12 +241,13 @@
     wrap.appendChild(tpl.content.cloneNode(true));
     container.appendChild(wrap);
     $('activeToolTitle').textContent = tool.title;
+    $('crumbHere').textContent = tool.title;
     $('activeToolDesc').textContent = tool.desc;
-    $('dashboardView').classList.add('hidden');
-    $('toolWorkspaceView').classList.remove('hidden');
-    document.title = tool.title + ' | MyBizTools.my';
+    $('homeView').hidden = true;
+    $('toolView').hidden = false;
+    document.title = tool.title + ' | ' + SITE_NAME;
     tool.init(wrap);
-    refreshIcons();
+    refreshIcons(wrap);
     $('activeToolTitle').focus({ preventScroll: true });
     window.scrollTo({ top: 0 });
   }
@@ -275,23 +276,57 @@
       const catOk = currentCategory === 'all' || card.dataset.cat === currentCategory;
       const text = (card.dataset.name + ' ' + card.textContent).toLowerCase();
       const show = catOk && (q === '' || text.includes(q));
-      card.classList.toggle('hidden', !show);
+      card.hidden = !show;
       if (show) visibleTotal++;
     });
     document.querySelectorAll('.suite-section').forEach((sec) => {
-      sec.classList.toggle('hidden', sec.querySelectorAll('.tool-card:not(.hidden)').length === 0);
+      sec.hidden = sec.querySelectorAll('.tool-card:not([hidden])').length === 0;
     });
-    $('noResults').classList.toggle('hidden', visibleTotal > 0);
+    $('noResults').hidden = visibleTotal > 0;
   }
 
   function setCategory(cat) {
     currentCategory = cat;
-    document.querySelectorAll('.cat-pill').forEach((btn) => {
-      const on = btn.dataset.cat === cat;
-      btn.className = on ? PILL_ACTIVE : PILL_IDLE;
-      btn.setAttribute('aria-pressed', String(on));
+    document.querySelectorAll('[data-action="set-category"]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.cat === cat));
     });
     applyFilters();
+  }
+
+  /* =====================================================
+   * THEME — follows the device until the visitor picks one
+   * ===================================================== */
+  const darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  function storedTheme() {
+    try {
+      const t = localStorage.getItem(THEME_KEY);
+      return t === 'light' || t === 'dark' ? t : null;
+    } catch (e) { return null; }
+  }
+
+  function effectiveTheme() {
+    return storedTheme() || (darkQuery && darkQuery.matches ? 'dark' : 'light');
+  }
+
+  function updateThemeButtons() {
+    const current = document.documentElement.getAttribute('data-theme') || effectiveTheme();
+    document.querySelectorAll('[data-action="set-theme"]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.themeValue === current));
+    });
+  }
+
+  function setTheme(value) {
+    if (value !== 'light' && value !== 'dark') return;
+    document.documentElement.setAttribute('data-theme', value);
+    try { localStorage.setItem(THEME_KEY, value); } catch (e) { /* storage blocked: applies for this visit only */ }
+    updateThemeButtons();
+  }
+
+  if (darkQuery) {
+    const onDeviceChange = () => { if (!storedTheme()) updateThemeButtons(); };
+    if (darkQuery.addEventListener) darkQuery.addEventListener('change', onDeviceChange);
+    else if (darkQuery.addListener) darkQuery.addListener(onDeviceChange);
   }
 
   /* =====================================================
@@ -303,10 +338,7 @@
 
   function updateKopiUI() {
     [10, 20, 50].forEach((v) => {
-      const b = $('kopi-' + v);
-      const on = v === kopiAmount;
-      b.className = on ? KOPI_ACTIVE : KOPI_IDLE;
-      b.setAttribute('aria-pressed', String(on));
+      $('kopi-' + v).setAttribute('aria-pressed', String(v === kopiAmount));
     });
     const ready = validLink(CONFIG.STRIPE_LINKS[kopiAmount]);
     $('kopiSubmitBtn').disabled = !ready;
@@ -330,7 +362,7 @@
       window.open(CONFIG.VOTE_FORM_URL, '_blank', 'noopener,noreferrer');
       fb.textContent = 'Opening the suggestion form for "' + name + '"';
     } else {
-      fb.textContent = 'Suggestions open soon. Thanks for your interest in "' + name + '"!';
+      fb.textContent = 'Suggestions open soon. Thanks for your interest in "' + name + '".';
     }
   }
 
@@ -366,7 +398,7 @@
       Session.set(SST_KEY, { rate: e.rate.value, amount: e.amount.value, cost: e.cost.value, round: e.round.checked, mode });
     }
 
-    const show = (id, visible) => $(id).classList.toggle('hidden', !visible);
+    const show = (id, visible) => { $(id).hidden = !visible; };
     const blank = () => {
       ['out-net', 'out-tax', 'out-gross', 'out-adj', 'out-payable', 'out-profit', 'out-margin', 'out-markup']
         .forEach((id) => { $(id).textContent = '—'; });
@@ -378,7 +410,7 @@
     if (Number.isNaN(amountSen)) error = 'Enter the price as a number, for example 1250 or 1,250.50.';
     else if (Number.isNaN(costSen)) error = 'Enter your cost as a number, for example 800 or 800.00.';
     e.err.textContent = error;
-    e.err.classList.toggle('hidden', !error);
+    e.err.hidden = !error;
 
     if (amountSen == null || Number.isNaN(amountSen)) { blank(); return; }
 
@@ -423,9 +455,6 @@
     const modalRoot = ev.target.closest('[data-modal-root]');
     if (modalRoot && ev.target === modalRoot) { closeModal(); return; }
 
-    const card = ev.target.closest('[data-tool]');
-    if (card) { location.hash = card.dataset.tool; return; }
-
     const el = ev.target.closest('[data-action]');
     if (!el) return;
     switch (el.dataset.action) {
@@ -433,18 +462,13 @@
       case 'open-modal': openModal(el.dataset.modal); break;
       case 'close-modal': closeModal(); break;
       case 'set-category': setCategory(el.dataset.cat); break;
+      case 'set-theme': setTheme(el.dataset.themeValue); break;
       case 'kopi-amount': kopiAmount = Number(el.dataset.amount); updateKopiUI(); break;
       case 'kopi-checkout': kopiCheckout(); break;
       case 'vote': suggestTool(el.dataset.toolName); break;
       case 'purge': Session.clear('you pressed Clear memory'); break;
       case 'download-receipt': downloadReceipt(); break;
     }
-  });
-
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key !== 'Enter' && ev.key !== ' ') return;
-    const card = ev.target.closest && ev.target.closest('[data-tool]');
-    if (card && ev.target === card) { ev.preventDefault(); location.hash = card.dataset.tool; }
   });
 
   $('toolSearch').addEventListener('input', applyFilters);
@@ -454,6 +478,7 @@
   /* ---------- Boot ---------- */
   Session.record('Ready. Nothing is held in this tab\'s memory yet.');
   updateKopiUI();
+  updateThemeButtons();
   refreshIcons();
   route();
 
