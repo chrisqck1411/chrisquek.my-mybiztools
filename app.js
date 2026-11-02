@@ -6,7 +6,7 @@
 
   /* ---------- CONFIG: fill these in when ready ---------- */
   const CONFIG = {
-    APP_VERSION: '2026.11.02-a',
+    APP_VERSION: '2026.11.02-b',
     // Stripe Payment Links, one per tip amount. Leave '' until your Stripe account is approved.
     // Format: 'https://buy.stripe.com/xxxxxxxx'
     STRIPE_LINKS: { 10: '', 20: '', 50: '' },

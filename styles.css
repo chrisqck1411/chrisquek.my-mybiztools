@@ -25,6 +25,7 @@
   --ok: #146C43;
   --ok-bg: #E6F4EC;
   --chip-bg: #EEF1F5;
+  --tint-border: #C9D6F5;
   --input-border: #7B8696;
   --danger: #B42318;
   --overlay: rgba(15, 23, 42, 0.55);
@@ -44,6 +45,7 @@
     --ok: #4ADE80;
     --ok-bg: #12301F;
     --chip-bg: #1E2733;
+    --tint-border: #2C4166;
     --input-border: #6B7788;
     --danger: #F97066;
     --overlay: rgba(0, 0, 0, 0.65);
@@ -63,6 +65,7 @@
   --ok: #4ADE80;
   --ok-bg: #12301F;
   --chip-bg: #1E2733;
+  --tint-border: #2C4166;
   --input-border: #6B7788;
   --danger: #F97066;
   --overlay: rgba(0, 0, 0, 0.65);
@@ -231,6 +234,9 @@ button { cursor: pointer; }
 .soon { display: inline-flex; align-items: center; gap: 6px; color: var(--faint); font-size: 14px; }
 
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.panel-tint { background: var(--accent-subtle); border-color: var(--tint-border); }
+.panel-tint .vote-btn { background: var(--surface); }
+.panel-tint .vote-btn:hover { background: var(--bg); }
 .panel-title { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; }
 .panel-title .icon-ok { color: var(--ok); }
 .panel-title .icon-accent { color: var(--accent); }
@@ -355,7 +361,7 @@ main { flex: 1; width: 100%; }
 
 .tip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .tip-option {
-  min-height: 64px; padding: 10px 6px;
+  min-height: 52px; padding: 10px 6px;
   border: 1px solid var(--input-border); border-radius: 8px;
   background: transparent; color: var(--text); text-align: center;
 }
